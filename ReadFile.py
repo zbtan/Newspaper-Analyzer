@@ -14,5 +14,4 @@ def readPic():
     with open(file_path, "rb") as image_file:
         binary_data = image_file.read()
 
-    image = binary_data
-    print(image)
+    return binary_data

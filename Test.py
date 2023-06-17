@@ -1,0 +1,3 @@
+import WebScrape
+
+WebScrape.getNews

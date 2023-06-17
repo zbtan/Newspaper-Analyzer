@@ -3,30 +3,35 @@ from newspaper import Article
 import nltk
 from textblob import TextBlob
 
-url = 'https://www.hindustantimes.com/cricket/gt-vs-dc-live-score-ipl-2023-gujarat-titans-vs-delhi-capitals-todays-ipl-match-44-latest-scorecard-updates-101683021413230.html'
+link = "https://www.businessinsider.com/tucker-carlson-text-its-not-how-white-men-fight-2023-5"
 
-# Download the article
-article = Article(url)
+def getContent(link1):
+    url = link1
 
-# Parse the article
-article.download()
-article.parse()
-article.nlp()
+    # Download the article
+    article = Article(url)
 
-# Print the article's title
-print(article.title)
+    # Parse the article
+    article.download()
+    article.parse()
+    article.nlp()
+    
+    # Print the article's title
+    print(article.title)
 
-# Print the article's authors
-print(article.authors)
+    # Print the article's authors
+    print(article.authors)
 
-# Print the published date of the article
-print(article.publish_date)
+    # Print the published date of the article
+    print(article.publish_date)
 
-# Print the article's content
-print(article.text)
+    # Print the article's content
+    print(article.text)
 
-print("Summary:\n")
-print(article.summary)
+    print("\nSummary:\n")
+    print(article.summary)
 
-analysis = TextBlob(article.text)
-print (analysis.sentiment)
+    analysis = TextBlob(article.text)
+    print (analysis.sentiment)
+
+getContent(link)

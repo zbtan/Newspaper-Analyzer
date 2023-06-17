@@ -1,9 +1,6 @@
 import DatabaseConnector
 import ReadFile
 import re
-import tkinter as tk
-from tkinter import filedialog
-import sqlite3
 
 def addUser():
     cnx = DatabaseConnector.connect()
@@ -19,16 +16,7 @@ def addUser():
         new_id_number = 1
     new_id = "U" + str(new_id_number).zfill(9)
 
-    root = tk.Tk()
-
-    file_path = filedialog.askopenfilename()
-
-    print("Selected file path:", file_path)
-
-    # Read the image file in binary mode
-    with open(file_path, "rb") as image_file:
-        binary_data = image_file.read()
-    image = binary_data
+    image = ReadFile.readPic()
 
     name = input("Name: ")
 
@@ -108,13 +96,6 @@ def updateUser():
     
     match choice:
         case 1:
-            def open_file_dialog():
-                root = tk.Tk()
-                root.withdraw()
-                file_path = filedialog.askopenfilename()
-                root.destroy()
-                return file_path
-
             # Main code
             while True:
                 id = input("User ID: ")
@@ -125,12 +106,7 @@ def updateUser():
                 else:
                     break
 
-            file_path = open_file_dialog()
-            print("Selected file path:", file_path)
-
-            with open(file_path, "rb") as image_file:
-                binary_data = image_file.read()
-            image = binary_data
+            image = ReadFile.readPic()
 
             query = "UPDATE users SET PIC = %s WHERE USER_ID = %s"
             val = (image, id,)
@@ -303,6 +279,7 @@ def updateUser():
                     break
             
             image = ReadFile.readPic()
+            
             name = input("Name: ")
             gender = input("Gender: ")
             if (gender == "Male" or gender == "male" or gender == "m" or gender == "M"):
