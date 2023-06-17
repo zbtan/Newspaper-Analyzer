@@ -17,55 +17,6 @@ def addAdmin():
 
     name = input("Name: ")
 
-    gender = input("Gender: ")
-    if (gender == "Male" or gender == "male" or gender == "m" or gender == "M"):
-        gender = "Male"
-    elif (gender == "Female" or gender == "female" or gender == "f" or gender =="F"):
-        gender = "Female"
-    while (gender != "Female" and gender != "Male"):
-        gender = input("Gender: ")
-        if (gender == "Male" or gender == "male" or gender == "m" or gender == "M"):
-            gender = "Male"
-        elif (gender == "Female" or gender == "female" or gender == "f" or gender == "F"):
-            gender = "Female"
-
-    while True:
-        age_str = input("Age: ")
-        try:
-            age = int(age_str)
-            if age < 0:
-                print("Invalid input. Age cannot be negative.")
-            elif age > 120:
-                print("Invalid input. Age cannot be greater than 120.")
-            else:
-                break
-        except ValueError:
-            print("Invalid input. Please enter a valid integer age.")
-
-    while True:
-        ic_number_str = input("IC number: ")
-        try:
-            ic_number = int(ic_number_str)
-            if len(ic_number_str) != 12:
-                print("Invalid input. IC must have 12 digits.")
-            else:
-                break
-        except ValueError:
-            print("Invalid input. Please enter a valid integer IC number.")
-
-    while True:
-        contact_number_str = input("Contact number: ")
-        try:
-            contact_number = int(contact_number_str)
-            if contact_number_str[0] != '0':
-                print("Invalid input. Contact number must start with 0.")
-            elif len(contact_number_str) not in [10, 11]:
-                print("Invalid input. Contact number must have either 10 or 11 digits.")
-            else:
-                break
-        except ValueError:
-            print("Invalid input. Please enter a valid integer contact number.")
-    
     email = input("Email: ")
     def is_valid_email(email):
         pattern = r"[^@]+@[^@]+\.[^@]+" #Define the pattern of the valid email
@@ -89,9 +40,9 @@ def addAdmin():
         else:
             break
 
-    query = "INSERT INTO admin (ADMIN_ID, NAME, GENDER, AGE, IC_NUMBER, CONTACT_NUMBER, EMAIL, PASSWORD, STATUS) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, 1)"
+    query = "INSERT INTO admin (ADMIN_ID, NAME, EMAIL, PASSWORD, STATUS) VALUES (%s, %s, %s, %s, 1)"
     try:
-        cursor.execute(query, (new_id, name, gender, age, ic_number, contact_number, email, password))
+        cursor.execute(query, (new_id, name, email, password))
         cnx.commit()
         print("Insert successful.")
     except:
@@ -103,12 +54,12 @@ def updateAdmin():
     cnx = DatabaseConnector.connect()
     cursor = cnx.cursor()
 
-    print("Upadate Admin Info\n\n[1] Name\n[2] Gender\n[3] Age\n[4] IC Number\n[5] Contact Number\n[6] Email\n[7] Password\n[8] All\n\n")
+    print("Upadate Admin Info\n\n[1] Name\n[2] Email\n[3] Password\n[4] All\n\n")
     while True:
         choice = input("Which field you want to update: ")
         try:
             choice = int(choice)
-            if choice < 1 or choice > 7:
+            if choice < 1 or choice > 4:
                 print("Invalid Input. The number should in the range of 1 to 7.")
             else:
                 break
@@ -145,131 +96,6 @@ def updateAdmin():
                 else:
                     break
 
-            gender = input("Gender: ")
-            if (gender == "Male" or gender == "male" or gender == "m" or gender == "M"):
-                gender = "Male"
-            elif (gender == "Female" or gender == "female" or gender == "f" or gender =="F"):
-                gender = "Female"
-            while (gender != "Female" and gender != "Male"):
-                gender = input("Gender: ")
-                if (gender == "Male" or gender == "male" or gender == "m" or gender == "M"):
-                    gender = "Male"
-                elif (gender == "Female" or gender == "female" or gender == "f" or gender == "F"):
-                    gender = "Female"
-            
-            query = "UPDATE admin SET GENDER = %s WHERE ADMIN_ID = %s"
-            val = (gender, id,)
-            try:
-                cursor.execute(query, val)
-                cnx.commit()
-                print("Update successful.")
-            except:
-                print("Update unsuccessful.")
-
-        case 3:
-            while True:
-                id = input("Admin ID: ")
-                if(id[0]!="A"):
-                    print("Invalid Input. Admin ID should start with A.")
-                elif(len(id)!=10):
-                    print("Invalid Input. Admin ID should have 1 character and 9 digit.")
-                else:
-                    break
-
-            while True:
-                age_str = input("Age: ")
-                try:
-                    age = int(age_str)
-                    if age < 0:
-                        print("Invalid input. Age cannot be negative.")
-                    elif age > 120:
-                        print("Invalid input. Age cannot be greater than 120.")
-                    else:
-                        break
-                except ValueError:
-                    print("Invalid input. Please enter a valid integer age.")
-
-            query = "UPDATE admin SET AGE = %s WHERE ADMIN_ID = %s"
-            val = (age, id,)
-            try:
-                cursor.execute(query, val)
-                cnx.commit()
-                print("Update successful.")
-            except:
-                print("Update unsuccessful.")
-
-        case 4:
-            while True:
-                id = input("Admin ID: ")
-                if(id[0]!="A"):
-                    print("Invalid Input. Admin ID should start with A.")
-                elif(len(id)!=10):
-                    print("Invalid Input. Admin ID should have 1 character and 9 digit.")
-                else:
-                    break
-
-            while True:
-                ic_number_str = input("IC number: ")
-                try:
-                    ic_number = int(ic_number_str)
-                    if len(ic_number_str) != 12:
-                        print("Invalid input. IC must have 12 digits.")
-                    else:
-                        break
-                except ValueError:
-                    print("Invalid input. Please enter a valid integer IC number.")
-
-            query = "UPDATE admin SET IC_NUMBER = %s WHERE ADMIN_ID = %s"
-            val = (ic_number, id,)
-            try:
-                cursor.execute(query, val)
-                cnx.commit()
-                print("Update successful.")
-            except:
-                print("Update unsuccessful.")
-
-        case 5:
-            while True:
-                id = input("Admin ID: ")
-                if(id[0]!="A"):
-                    print("Invalid Input. Admin ID should start with A.")
-                elif(len(id)!=10):
-                    print("Invalid Input. Admin ID should have 1 character and 9 digit.")
-                else:
-                    break
-
-            while True:
-                contact_number_str = input("Contact number: ")
-                try:
-                    contact_number = int(contact_number_str)
-                    if contact_number_str[0] != '0':
-                        print("Invalid input. Contact number must start with 0.")
-                    elif len(contact_number_str) not in [10, 11]:
-                        print("Invalid input. Contact number must have either 10 or 11 digits.")
-                    else:
-                        break
-                except ValueError:
-                    print("Invalid input. Please enter a valid integer contact number.")
-
-            query = "UPDATE admin SET CONTACT_NUMBER = %s WHERE ADMIN_ID = %s"
-            val = (contact_number, id,)
-            try:
-                cursor.execute(query, val)
-                cnx.commit()
-                print("Update successful.")
-            except:
-                print("Update unsuccessful.")
-
-        case 6:
-            while True:
-                id = input("Admin ID: ")
-                if(id[0]!="A"):
-                    print("Invalid Input. Admin ID should start with A.")
-                elif(len(id)!=10):
-                    print("Invalid Input. Admin ID should have 1 character and 9 digit.")
-                else:
-                    break
-
             email = input("Email: ")
             def is_valid_email(email):
                 pattern = r"[^@]+@[^@]+\.[^@]+" #Define the pattern of the valid email
@@ -290,7 +116,7 @@ def updateAdmin():
             except:
                 print("Update unsuccessful.")
 
-        case 7:
+        case 3:
             while True:
                 id = input("Admin ID: ")
                 if(id[0]!="A"):
@@ -341,55 +167,6 @@ def updateAdmin():
                     break
 
             name = input("Name: ")
-            gender = input("Gender: ")
-            if (gender == "Male" or gender == "male" or gender == "m" or gender == "M"):
-                gender = "Male"
-            elif (gender == "Female" or gender == "female" or gender == "f" or gender =="F"):
-                gender = "Female"
-            while (gender != "Female" and gender != "Male"):
-                gender = input("Gender: ")
-                if (gender == "Male" or gender == "male" or gender == "m" or gender == "M"):
-                    gender = "Male"
-                elif (gender == "Female" or gender == "female" or gender == "f" or gender == "F"):
-                    gender = "Female"
-
-            while True:
-                age_str = input("Age: ")
-                try:
-                    age = int(age_str)
-                    if age < 0:
-                        print("Invalid input. Age cannot be negative.")
-                    elif age > 120:
-                        print("Invalid input. Age cannot be greater than 120.")
-                    else:
-                        break
-                except ValueError:
-                    print("Invalid input. Please enter a valid integer age.")
-
-            while True:
-                ic_number_str = input("IC number: ")
-                try:
-                    ic_number = int(ic_number_str)
-                    if len(ic_number_str) != 12:
-                        print("Invalid input. IC must have 12 digits.")
-                    else:
-                        break
-                except ValueError:
-                    print("Invalid input. Please enter a valid integer IC number.")
-
-            while True:
-                contact_number_str = input("Contact number: ")
-                try:
-                    contact_number = int(contact_number_str)
-                    if contact_number_str[0] != '0':
-                        print("Invalid input. Contact number must start with 0.")
-                    elif len(contact_number_str) not in [10, 11]:
-                        print("Invalid input. Contact number must have either 10 or 11 digits.")
-                    else:
-                        break
-                except ValueError:
-                    print("Invalid input. Please enter a valid integer contact number.")
-    
             email = input("Email: ")
             def is_valid_email(email):
                 pattern = r"[^@]+@[^@]+\.[^@]+" #Define the pattern of the valid email
@@ -423,8 +200,8 @@ def updateAdmin():
                 else:
                     break
                 
-            query = "UPDATE admin SET NAME = %s, GENDER = %s, AGE = %s, IC_NUMBER = %s, CONTACT_NUMBER = %s, EMAIL = %s, PASSWORD = %s WHERE ADMIN_ID = %s"
-            val = (name, gender, age, ic_number, contact_number, email, password, id,)
+            query = "UPDATE admin SET NAME = %s, EMAIL = %s, PASSWORD = %s WHERE ADMIN_ID = %s"
+            val = (name, email, password, id,)
             try:
                 cursor.execute(query, val)
                 cnx.commit()

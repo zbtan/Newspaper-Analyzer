@@ -1,4 +1,5 @@
 import DatabaseConnector
+import ReadFile
 import re
 
 def addUser():
@@ -14,6 +15,8 @@ def addUser():
     else:
         new_id_number = 1
     new_id = "U" + str(new_id_number).zfill(9)
+
+    image = ReadFile.readPic()
 
     name = input("Name: ")
 
@@ -65,9 +68,9 @@ def addUser():
         else:
             break
 
-    query = "INSERT INTO users (USER_ID, NAME, GENDER, AGE, EMAIL, PASSWORD, STATUS) VALUES (%s, %s, %s, %s, %s, %s, 1)"
+    query = "INSERT INTO users (USER_ID, PIC, NAME, GENDER, AGE, EMAIL, PASSWORD, STATUS) VALUES (%s, %s, %s, %s, %s, %s, %s, 1)"
     try:
-        cursor.execute(query, (new_id, name, gender, age, email, password))
+        cursor.execute(query, (new_id, image, name, gender, age, email, password))
         cnx.commit()
         print("Insert successful.")
     except:
@@ -79,7 +82,7 @@ def updateUser():
     cnx = DatabaseConnector.connect()
     cursor = cnx.cursor()
 
-    print("Upadate User Info\n\n[1] Name\n[2] Gender\n[3] Age\n[4] Email\n[5] Password\n [6] All\n\n")
+    print("Upadate User Info\n\n[1] Profil Pic\n[2] Name\n[3] Gender\n[4] Age\n[5] Email\n[6] Password\n[7] All\n\n")
     while True:
         choice = input("Which field you want to update: ")
         try:
@@ -93,6 +96,27 @@ def updateUser():
     
     match choice:
         case 1:
+            # Main code
+            while True:
+                id = input("User ID: ")
+                if(id[0]!="U"):
+                    print("Invalid Input. User ID should start with U.")
+                elif(len(id)!=10):
+                    print("Invalid Input. User ID should have 1 character and 9 digit.")
+                else:
+                    break
+
+            image = ReadFile.readPic()
+
+            query = "UPDATE users SET PIC = %s WHERE USER_ID = %s"
+            val = (image, id,)
+            try:
+                cursor.execute(query, val)
+                cnx.commit()
+                print("Update successful.")
+            except:
+                print("Update unsuccessful.")
+        case 2:
             while True:
                 id = input("User ID: ")
                 if(id[0]!="U"):
@@ -111,7 +135,7 @@ def updateUser():
             except:
                 print("Update unsuccessful.")
         
-        case 2:
+        case 3:
             while True:
                 id = input("User ID: ")
                 if(id[0]!="U"):
@@ -142,7 +166,7 @@ def updateUser():
             except:
                 print("Update unsuccessful.")
 
-        case 3:
+        case 4:
             while True:
                 id = input("User ID: ")
                 if(id[0]!="U"):
@@ -174,7 +198,7 @@ def updateUser():
             except:
                 print("Update unsuccessful.")
 
-        case 4:
+        case 5:
             while True:
                 id = input("User ID: ")
                 if(id[0]!="U"):
@@ -204,7 +228,7 @@ def updateUser():
             except:
                 print("Update unsuccessful.")
         
-        case 5:
+        case 6:
             while True:
                 id = input("User ID: ")
                 if(id[0]!="U"):
@@ -244,7 +268,7 @@ def updateUser():
             except:
                 print("Update unsuccessful.")
 
-        case 6:
+        case 7:
             while True:
                 id = input("User ID: ")
                 if(id[0]!="U"):
@@ -253,7 +277,9 @@ def updateUser():
                     print("Invalid Input. User ID should have 1 character and 9 digit.")
                 else:
                     break
-
+            
+            image = ReadFile.readPic()
+            
             name = input("Name: ")
             gender = input("Gender: ")
             if (gender == "Male" or gender == "male" or gender == "m" or gender == "M"):
@@ -313,8 +339,8 @@ def updateUser():
                 else:
                     break
                 
-            query = "UPDATE users SET NAME = %s, GENDER = %s, AGE = %s, EMAIL = %s, PASSWORD =%s WHERE USER_ID = %s"
-            val = (name, gender, age, email, password, id,)
+            query = "UPDATE users SET PIC = %s, NAME = %s, GENDER = %s, AGE = %s, EMAIL = %s, PASSWORD =%s WHERE USER_ID = %s"
+            val = (image, name, gender, age, email, password, id,)
             try:
                 cursor.execute(query, val)
                 cnx.commit()
