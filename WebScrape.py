@@ -138,6 +138,7 @@ def searchNews():
     total_results = output['totalResults']
     print(f"Total Results: {total_results}")
 
+<<<<<<< HEAD
 def searchNewsLink():
     search = input("Keyword of News: ")
 
@@ -414,3 +415,6 @@ def searchNewsObject():
 
     # return the list of articles
     return articles
+=======
+searchNews()
+>>>>>>> 0e5687678fcbc23b8b21e456b35a4dc7b07173a6
